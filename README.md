@@ -28,4 +28,6 @@ Mine Dogucu, Assistant Professor of Teaching, Department of Statistics, Universi
 
 ## History
 
+This workshop is to be taught at 2020 Quality and Productivity Research Conference at Florida State University on 2020-06-08. This workshop will be TA'ed by [Mary Ryan](https://www.ics.uci.edu/~marymr/).
+
 This workshop is to be taught at [UCI Center for Statistical Consulting](https://statconsulting.uci.edu/) on 2020-03-05. This workshop will be TA'ed by [Mary Ryan](https://www.ics.uci.edu/~marymr/).
