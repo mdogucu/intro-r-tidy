@@ -18,9 +18,9 @@ Of all these steps RStudio Cloud is the most important. If you run into issues w
 
 ## Instructor Info
 
-Mine Dogucu, Assistant Professor of Teaching, Department of Statistics, University of California
-[minedogucu.com](http://www.minedogucu.com)
-[@MineDogucu](http://www.twitter.com/MineDogucu)
+Mine Dogucu, Assistant Professor of Teaching, Department of Statistics, University of California  
+[minedogucu.com](http://www.minedogucu.com)  
+[@MineDogucu](http://www.twitter.com/MineDogucu)  
 
 ## License
 
