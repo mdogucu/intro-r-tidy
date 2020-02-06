@@ -15,3 +15,14 @@ Of all these steps RStudio Cloud is the most important. If you run into issues w
 - Join the conversation on Twitter with #rstats #tidyverse tags. It is a welcoming community. 
 - Find your local R meetups on [meetup.com](https://www.meetup.com/topics/r-project-for-statistical-computing/).
 - Join [RStudio Community](https://community.rstudio.com/). 
+
+## Instructor Info
+
+Mine Dogucu, Assistant Professor of Teaching, Department of Statistics, University of California
+[minedogucu.com](http://www.minedogucu.com)
+[@MineDogucu](http://www.twitter.com/MineDogucu)
+
+## License
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+
