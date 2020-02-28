@@ -7,14 +7,15 @@
 
 Of all these steps RStudio Cloud is the most important. If you run into issues with any of the installations, we can take a look at it during lunch break. We will not be needing them before lunch. 
 
-## During Workshop
-
+## During the Workshop
 
 ## After the Workshop
 
 - Join the conversation on Twitter with #rstats #tidyverse tags. It is a welcoming community. 
 - Find your local R meetups on [meetup.com](https://www.meetup.com/topics/r-project-for-statistical-computing/).
 - Join [RStudio Community](https://community.rstudio.com/). 
+- Try Out [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).
+- Join [R for Data Science Learning Community](https://www.rfordatasci.com/).
 
 ## Instructor Info
 
