@@ -1,0 +1,127 @@
+---
+title: "Introduction to R the Tidy Way"
+subtitle: "Everything I did not have time to cover"
+author: "Mine Dogucu"
+date: "2020-03-05"
+output:
+  xaringan::moon_reader:
+    css: slide-styles.css
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+layout: true
+
+<!-- This file by Mine Dogucu is licensed under a  Attribution-ShareAlike 2.5 Generic License (CC BY-SA 2.5) More information about the license can be found at https://creativecommons.org/licenses/by-sa/2.5/ -->
+  
+<div class="my-header"></div>
+
+<div class="my-footer"> 
+ CC BY-SA <a href="https://mdogucu.ics.uci.edu">Mine Dogucu</a></div> 
+
+---
+class: center, middle
+
+## License
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/cc-sa.png')
+```
+
+
+More information can be found [here](https://creativecommons.org/licenses/by-sa/2.5/)
+
+---
+
+##  Data Science Cycle
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/data-cycle.png')
+```
+
+.footnote[Image from Grolemund, G., & Wickham, H. (2018). R for data science (CC BY-NC-ND 3.0).]
+
+---
+
+class: center, middle
+
+
+.strike[Everything I did not have time to cover]
+
+What I would teach if we had 8 more hours of this workshop
+
+---
+class: center, middle
+
+
+.strike[Everything I did not have time to cover]
+
+.strike[What I would teach if we had 8 more hours of this workshop]
+
+All the cool things you can check out later in depth
+
+---
+
+naniar
+gganimate
+shiny
+xaringan
+rticles
+stringr
+patchwork
+kableExtra
+github - show our example reproducible workflows
+here::here()
+
+There is a package for everything.
+
+If there is not, then you can build your own package.
+
+
+
+---
+
+
+## After the Workshop
+
+- Join the conversation on Twitter with #rstats #tidyverse tags. It is a welcoming community. 
+- Find your local R meetups on [meetup.com](https://www.meetup.com/topics/r-project-for-statistical-computing/).
+- Join [RStudio Community](https://community.rstudio.com/). 
+- Try Out [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).
+- Join [R for Data Science Learning Community](https://www.rfordatasci.com/).
+- Use [RStudio resources](https://resources.rstudio.com/): webinars, conference talks etc.
+
+---
+
+class: center middle
+
+Mine Dogucu
+
+[@MineDogucu](https://twitter.com/MineDogucu)
+
+[mdogucu@uci.edu](mailto:mdogucu@uci.edu)
+
+---
+## Schedule for the Day
+
+__08:45 - 09:00 Introduction__  
+__09:00 - 09:15 Getting to Know the Basics__  
+__09:15 - 10:15 Data Visualization__  
+__10:15 - 10:30 Break__  
+__10:30 - 12:00 Data Wrangling__  
+__12:00 - 01:00 Lunch__  
+__01:00 - 01:30 Working Locally With R__  
+__01:30 - 02:00 Dealing with Datasets__  
+__02:00 - 02:30 Case Study__  
+__02:30 - 02:45 Break__  
+__02:45 - 03:30 Modeling__  
+__03:30 - 04:00 Everything I did not have time to cover__
+
+
+
+

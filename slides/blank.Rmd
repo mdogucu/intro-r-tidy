@@ -1,0 +1,64 @@
+---
+title: "Introduction to R the Tidy Way"
+subtitle: "Welcome"
+author: "Mine Dogucu"
+date: "2020-03-05"
+output:
+  xaringan::moon_reader:
+    css: slide-styles.css
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+layout: true
+
+<!-- This file by Mine Dogucu is licensed under a  Attribution-ShareAlike 2.5 Generic License (CC BY-SA 2.5) More information about the license can be found at https://creativecommons.org/licenses/by-sa/2.5/ -->
+  
+<div class="my-header"></div>
+
+<div class="my-footer"> 
+ CC BY-SA <a href="https://mdogucu.ics.uci.edu">Mine Dogucu</a></div> 
+
+---
+class: center, middle
+
+## License
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/cc-sa.png')
+```
+
+
+More information can be found [here](https://creativecommons.org/licenses/by-sa/2.5/)
+
+---
+
+
+
+
+---
+
+
+## Schedule for the Day
+
+08:45 - 09:00 Introduction  
+09:00 - 09:15 Getting to Know the Basics  
+09:15 - 10:15 Data Visualization  
+10:15 - 10:30 Break  
+10:30 - 12:00 Data Wrangling  
+12:00 - 01:00 Lunch  
+01:00 - 01:30 Working Locally With R  
+01:30 - 02:00 Dealing with Datasets  
+02:00 - 02:30 Case Study  
+02:30 - 02:45 Break  
+02:45 - 03:30 Modeling  
+03:30 - 04:00 Everything I did not have time to cover
+
+
+
+
