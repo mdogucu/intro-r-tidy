@@ -1,0 +1,798 @@
+---
+title: "Introduction to R the Tidy Way"
+subtitle: "Data Wrangling"
+author: "Mine Dogucu"
+date: "2020-03-05"
+output:
+  xaringan::moon_reader:
+    css: slide-styles.css
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+layout: true
+
+<!-- This file by Mine Dogucu is licensed under a  Attribution-ShareAlike 2.5 Generic License (CC BY-SA 2.5) More information about the license can be found at https://creativecommons.org/licenses/by-sa/2.5/ -->
+  
+<div class="my-header"></div>
+
+<div class="my-footer"> 
+ CC BY-SA <a href="https://mdogucu.ics.uci.edu">Mine Dogucu</a></div> 
+
+---
+class: center, middle
+
+## License
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/cc-sa.png')
+```
+
+More information can be found [here](https://creativecommons.org/licenses/by-sa/2.5/)
+
+---
+
+```{r echo = FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(gapminder)
+titanic <- titanic::titanic_train
+original_titanic <- titanic::titanic_train
+```
+
+---
+
+class:center middle
+
+## Reality of life
+
+A dataset is never in the format or the shape ready to analyze. 
+
+---
+
+## Getting to Know the Data
+
+- On the Cloud, open `3-wrange.Rmd`.
+- Run the code chunks already provided to you. 
+- The dataset `titanic` is provided to you.
+- Get to know this data, number of observations, number of observations.
+- Ignore the `original_titanic` for now. This dataset is exactly the same as `titanic`. We will save it for later.  
+
+
+---
+## Titanic variables 
+
+`PassengerId` - Passenger ID  
+`Survived` - Passenger Survival Indicator  
+`Pclass` - Passenger Class  
+`Name` - Name  
+`Sex` - Sex  
+`Age` - Age  
+`SibSp` - Number of Siblings/Spouses Aboard  
+`Parch` - Number of Parents/Children Aboard  
+`Ticket` - Ticket Number  
+`Fare` - Passenger Fare  
+`Cabin` - Cabin  
+`Embarked` - Port of Embarkation  
+
+.footnote[from `titanic` package]
+ 
+
+---
+## mutate()
+
+`mutate()` is a function used to create new variables (or overwrite old ones). 
+
+We can create a new variable called `age_today` for Titanic passenger to see how old the passengers would be today. Titanic sank 108 years ago. That would mean we would add 108 to `Age`.
+
+
+---
+## mutate()
+
+We need to tell R
+
+1. to mutate - `mutate()`  
+2. the data frame - `titanic`
+3. the name of the new variable - `age_today`
+4. the relationship between the new variable to the old variable `age + 108`
+
+
+```{r eval = FALSE}
+mutate(titanic, age_new = Age + 108)
+```
+
+---
+## mutate()
+
+Note that the previous code has not changed anything in the titanic data frame in your Environment. 
+
+---
+
+## mutate()
+
+Before we do the right thing, let's take a different approach
+
+```{r}
+titanic2 <- mutate(titanic, age_new = Age + 108)
+
+```
+
+Note that titanic2 data frame does have the age_new variable. 
+
+---
+## mutate()
+
+If we were to adopt this approach, by the end of data wrangling and before the analysis, we would have `titanic323232392352` so instead we can do: 
+
+```{r}
+titanic <- mutate(titanic, age_new = Age + 108)
+
+```
+
+This would overwrite the old titanic dataset.
+---
+## Attempt at Making a Boxplot
+
+Attempt at making boxplots that compares the fare paid for tickets based on passenger's class.
+
+In other words, you should have three boxplots next to each other, one for passengers in first class, another one for passengers in second class, and a third one for passengers in third class.
+
+Your code will not work. 
+
+---
+
+```{r echo = FALSE, fig.align='center'}
+ggplot(titanic) +
+  aes(x = Pclass, y = Fare) +
+  geom_boxplot()
+```
+
+---
+
+## Variable types in R
+
+<table>
+
+<th> Variable type </th>
+<th> Example values</th>
+<th> Example</th>
+
+
+<tr> 
+<td> logical </td>
+<td> TRUE FALSE</td>
+<td> chocolate variable in candy_rankings data</td>
+</tr>
+
+<tr> 
+<td> character </td>
+<td> "Braund, Mr.Owen Harris"</td>
+<td> name variable in titanic</td>
+</tr>
+
+<tr> 
+<td> factor </td>
+<td> "S", "C", "Q" </td>
+<td> Embarked variable in titanic (should be factor but currently is not)</td>
+</tr>
+
+<tr> 
+<td> integer </td>
+<td> 0L, 1L, 3L, 13L, </td>
+<td> SibSp variable in titanic </td>
+</tr>
+
+<tr> 
+<td> numeric </td>
+<td> 7.25, 13, 53.1 </td>
+<td> Fare variable in titanic </td>
+</tr>
+
+</table>
+
+.footnote[There are more but for now we are focusing on these. ]
+---
+class: middle
+
+## To-do list
+
+<table>
+<th> Variable </th>
+<th> Currently </th>
+<th> Should be </th>
+
+<tr>
+<td> Survived</td>
+<td> integer</td>
+<td> logical</td>
+</tr>
+
+<tr>
+<td> Pclass</td>
+<td> integer</td>
+<td> ?</td>
+</tr>
+
+<tr>
+<td> Embarked</td>
+<td> character</td>
+<td> ?</td>
+
+</tr>
+
+</table>
+
+.footnote[There are more problems with the variable. For now we are focusing on these.]
+
+---
+
+## mutate()
+
+```{r}
+titanic <- mutate(titanic,
+                  Survived = as.logical(Survived))
+```
+
+Note that we are again using the trick of overwriting. Instead of creating a new variable Survived_logical we are instead, overwriting to the old Survived variable. 
+
+The function `as.logical()` makes a variable a logical type. 
+
+---
+
+## Practice
+
+Make necesarry changes to `Pclass` and `Embarked` variables based on our discussion of their types.
+I have only provided you with `as.logical()` function but the others will be very similar. 
+
+```{r echo = FALSE}
+titanic <- mutate(titanic, Pclass = as.factor(Pclass))
+
+titanic <- mutate(titanic, Embarked = as.factor(Embarked))
+```
+
+---
+## Pause and share
+
+
+When do you think you would use `mutate()` in your own data analysis?
+
+---
+## titanic over and over
+
+We keep overwriting titanic all the time. 
+
+Repeating tasks can be annoying and time-consuming.
+
+There is a solution to that. 
+---
+## The big picture
+<table>
+
+<th> Input data </th>
+<th> Function </th>
+<th> Output (Saved) Data </th>
+
+<tr>
+<td style="background-color:lightblue;"> titanic </td>
+<td style="background-color:white;"> mutate to create age_today</td>
+<td style="background-color:red;"> titanic with age_today</td>
+</tr> 
+
+<tr>
+<td style="background-color:red;"> titanic with age_today</td>
+<td style="background-color:white;"> mutate to make Survived logical</td>
+<td style="background-color:green;"> titanic with age_today and logical Survived</td>
+</tr>
+
+<tr>
+<td style="background-color:green;"> titanic with age_today and logical Survived</td>
+<td style="background-color:white;"> mutate to make Pclass factor</td>
+<td style="background-color:violet;"> titanic with age_today, logical Survived, and factor Pclass</td>
+</tr>
+
+<tr>
+<td style="background-color:violet;"> titanic with age_today, logical Survived, and factor Pclass</td>
+<td style="background-color:white;"> mutate to make Embarked factor</td>
+<td style="background-color:orange;"> titanic with age_today, logical Survived, factor Pclass, factor Embarked</td>
+</tr>
+
+
+</table>
+
+---
+
+The repetation is that we are writing a data frame __and then__ using it again. Note the colors in the previous table. Life would be great if we could get rid of repeating colors.
+
+---
+
+## Ideal 
+
+<table>
+
+<th> Input data </th>
+<th> Function </th>
+<th>  </th>
+
+<tr>
+<td style="background-color:lightblue;"> titanic </td>
+<td style="background-color:white;"> mutate to create age_today</td>
+<td style="background-color:white;"> and then</td>
+</tr> 
+
+<tr>
+<td style="background-color:white;"></td>
+<td style="background-color:white;"> mutate to make Survived logical</td>
+<td style="background-color:white;"> and then</td>
+</tr>
+
+<tr>
+<td style="background-color:white;"> </td>
+<td style="background-color:white;"> mutate to make Pclass factor</td>
+<td style="background-color:white;"> and then </td>
+</tr>
+
+<tr>
+<td style="background-color:white;"> </td>
+<td style="background-color:white;"> mutate to make Embarked factor</td>
+<td style="background-color:orange;"> titanic with age_today, logical Survived, factor Pclass, factor Embarked</td>
+</tr>
+
+
+</table>
+
+This way we only have one input data and one output data
+
+---
+
+## Pipe %>%
+
+We can achieve "and then"s with a pipe operator. Remember that `original_titanic` is as same as the `titanic` we have started with. 
+
+```{r eval = FALSE}
+original_titanic %>% 
+  mutate(age_new = Age + 108) %>% 
+  mutate(Survived = as.logical(Survived)) %>% 
+  mutate(Pclass = as.factor(Pclass)) %>% 
+  mutate(Embarked = as.factor(Embarked))
+```
+
+Essentially what pipe operator does is, it takes the output of the function preceding it and then makes it the first argument of the following function.
+
+__Shortcut:__ Ctrl+Shift+M (Windows) and Cmd+Shift+M (Mac)
+
+---
+
+## Practice
+
+Can you write the following code with pipe operator?
+
+```{r}
+round(mean(c(2,2,4)))
+```
+
+
+---
+
+We will return to using the `titanic` dataset, as we have already done many mutations already. 
+
+Moving forward we will adopt the pipe operator into our workflow.
+
+
+---
+
+## Renaming variables
+
+Working with secondary data may also mean working with variables such as Q234P18 which has no meaning for the data analyst. In such cases using `rename()` to rename variables can be a good idea. It is not really useful in this case but it will be useful in the future. 
+
+```{r}
+titanic %>% 
+  rename(passenger_id = PassengerId)
+```
+
+## Subsetting Data Frame
+
+We often have datasets that have more than what we need, especially if we are working with secondary data sources (NIH, CDC, IES, US Census, etc.). In such cases, we want to subset the data. 
+
+Two main ways of subsetting data:
+
+1) We are not interested in all the variables (columns).
+
+2) We are no interested in all the cases (rows).
+
+---
+class: center middle 
+
+<table>
+
+<th> Function </th> 
+<th> Purpose </th>
+
+<tr> 
+<td> select() </td>
+<td> Subset data column-wise (i.e. selects columns) </td>
+
+</tr>
+
+<tr> 
+<td> filter() </td>
+<td> Subset data row-wise (i.e. filters rows)</td>
+
+</tr>
+
+</table>
+
+---
+
+## select
+
+Using `select()` to keep variables.
+
+```{r}
+titanic %>% 
+  select(Survived, Fare, Age, Pclass)
+```
+
+---
+## select
+
+Using `select()` to drop variables.
+
+```{r}
+titanic %>% 
+  select(-PassengerId, -Name)
+```
+
+---
+
+## More select functions
+
+`starts_with()`  
+`ends_with()`   
+`contains()`  
+`matches()`  
+
+These functions go inside the `select()` function. There are more of these.
+
+```{r}
+titanic %>% 
+  select(starts_with("S"))
+```
+
+---
+## filter 
+
+`filter()` helps us subset data frame based on some condition on the rows. 
+
+For instance we may want to deduce the data frame to only passengers in the third Pclass.
+
+```{r}
+titanic %>% 
+  filter(Pclass == "3")
+```
+
+---
+## filter 
+
+Note 1: We wrote "3" in quotes because it is a factor variable not a numeric variable. 
+
+Note 2: Why is it == instead of =? It is a logical statement. We are basically saying filter (keep) rows if Pclass equals to "3".
+---
+## Relational operators in R
+
+<table>
+<th> Operator </th>
+<th> Description </th>
+
+<tr> 
+<td> == </td>
+<td> Equals to </td></tr>
+
+<tr> 
+<td> !=</td>
+<td> Not equal to</td></tr>
+
+<tr> 
+<td> <</td>
+<td> Less than</tr>
+
+<tr> 
+<td> ></td>
+<td> Greater than</tr>
+
+
+<tr> 
+<td> &</td>
+<td> And</tr>
+
+<tr> 
+<td> |</td>
+<td> Or</tr>
+
+</table>
+
+---
+
+## Practice
+
+- Make a data frame that has `Survived` and `Pclass` only.
+
+- Make a data frame that has only `Fare`, and `Age` of all Survivors.
+
+- Make a data frame that does not have `Fare` and `Age` of all Survivors.
+
+- Make a data frame that has `Fare` and `Age` of passengers in second and third class.
+
+---
+## case_when()
+
+You might notice that `Embarked` variable is a little bir problematic. It is really difficult to understand what the levels C, Q, S represent.
+```{r echo = FALSE}
+str(titanic$Embarked)
+```
+
+"C" should be Cherbourg  
+"Q" should be Queenstown  
+"S" should be Southampton  
+" " should be NA
+---
+
+## case_when()
+
+```{r eval = FALSE}
+titanic %>% 
+  mutate(Embarked = case_when(
+    Embarked == "C" ~ "Cherbourg", 
+    Embarked == "Q" ~ "Queenstown",
+    Embarked == "S" ~ "Southampton")
+  ) 
+```
+
+---
+
+## Counting Data 
+
+`count()` is useful when counting the number of cases (sample size) for each level of a factor.
+
+```{r}
+count(titanic, Survived)
+```
+
+
+```{r}
+titanic %>% 
+  count(Survived)
+```
+---
+
+## Counting Data
+
+Instead of a count can I get a percentage? Yes. you may.
+
+```{r}
+titanic %>% 
+  count(Survived) %>% 
+  mutate(prop = n/sum(n))
+```
+
+---
+## Counting Data
+
+`count()` can take multiple variables.
+
+```{r}
+titanic %>% 
+count(Survived, Pclass)
+```
+---
+## Summarizing Data
+
+`summarize()` function along with other statistical functions such as `mean()`, `sd()`, `var()`, etc are useful for summarizing numeric data.
+
+```{r}
+titanic %>% 
+  summarize(mean(Fare))
+```
+
+---
+## Summarizing Data
+
+Try to summarize the mean Age. You should get.
+
+```{r echo = FALSE}
+titanic %>% 
+  summarize(mean(Age))
+```
+---
+## Missing Data
+
+Most other statistical software would delete missing values and return mean based on complete cases. 
+
+However, this approach may introduce bias to the estimates. 
+
+As a researcher you may think that there is no bias and delete the missing values, however, R would not do this for you.
+
+---
+## Missing Data
+
+```{r}
+titanic %>% 
+  summarize(mean(Age, na.rm = TRUE))
+```
+
+`na.rm` stands for remove NA values. Note that this argument is inside the mean function and not the summarize function!
+
+
+---
+
+## Summarizing Data
+
+```{r}
+titanic %>% 
+  summarize(mean(Fare), sd(Fare), var(Fare),
+            min(Fare), max(Fare), n())
+```
+---
+## Summarizing Data for groups
+
+Imagine that you want to calculate `mean(Fare)`, `sd(Fare)` separately for those who Survived and those who did not. Imagine doing this calculating by hand not in R. The steps would be 
+
+1. Take the data frame
+2. Split passengers as survivors and nonsurvivors into two groups. In other words, group based on `Survived`. In R words `group_by(Survived)`.
+3. Calculate any descriptives. 
+
+---
+## Summarizing Data for groups
+
+```{r}
+titanic %>% 
+  group_by(Survived) %>% 
+  summarize(mean(Fare), sd(Fare))
+```
+
+---
+## Summarizing Data for groups
+
+We can even create variable names so that the summary table looks even nicer!
+
+```{r}
+titanic %>% 
+  group_by(Survived) %>% 
+  summarize(mean_fare = mean(Fare), sd_fare = sd(Fare))
+```
+
+---
+
+## New Data
+
+```{r}
+glimpse(gapminder)
+```
+
+---
+
+## Practice
+
+- How many countries are represented in the dataset?
+
+---
+## Practice
+
+Arrive at the following plot. Note that the object is a geom_object().
+
+```{r echo = FALSE, fig.align='center', fig.height=5}
+gapminder %>% 
+  filter(country == "United States") %>% 
+  ggplot() +
+  aes(x = year, y = gdpPercap) +
+  geom_line()
+```
+
+---
+## Practice
+
+When is the lowest lifeExp recorded and where?
+
+When is the lowest lifeExp recorded and where?
+
+
+---
+
+## Reshaping Data
+
+In this data a country (id) is observed repeatedly over the years. The data is in long format. Those who work with repeated measures data may need to convert it wide format. 
+
+<table>
+
+<tr> 
+<td> pivot_wider()</td>
+<td> reshape from long data to wide data</td>
+</tr>
+
+<tr> 
+<td> pivot_longer()</td>
+<td> reshape from wide data to long data</td>
+</tr>
+
+</table>
+
+
+---
+
+## pivot_wider()
+
+```{r}
+
+gapminder %>% 
+  pivot_wider(id_cols = country,
+              names_from = year, 
+              values_from = lifeExp) 
+  
+  
+
+```
+
+
+## Summary - Working with Data Frames
+
+select()
+filter()
+pivot_longer()
+pivot_wider()
+group_by()
+
+## Summary -  Working with Variables
+mutate() 
+  with aid of other functions
+  case_when with relational operators 
+rename()
+summarize(mean())
+count()
+
+---
+
+
+class: middle
+
+## Not-so-Fun Fact
+
+[Cleaning Big Data: Most Time-Consuming, Least Enjoyable Data Science Task, Survey Says](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says/#6ae5b6b36f63)
+
+---
+## During Lunch
+
+- Make sure you have R and RStudio on your computers. We will not be using the Cloud anymore. Mary and I are here to help. 
+
+- Open RStudio on your computer and run the following code in your Console. We will talk what the code does later. 
+
+```{r eval = FALSE}
+install.packages("tidyverse")
+```
+
+
+
+
+---
+
+
+## Schedule for the Day
+
+__08:45 - 09:00 Introduction__  
+__09:00 - 09:15 Getting to Know the Basics__  
+__09:15 - 10:15 Data Visualization__  
+__10:15 - 10:30 Break__  
+__10:30 - 12:00 Data Wrangling__  
+12:00 - 01:00 Lunch  
+01:00 - 01:30 Working Locally With R  
+01:30 - 02:00 Dealing with Datasets  
+02:00 - 02:30 Case Study  
+02:30 - 02:45 Break  
+02:45 - 03:30 Modeling  
+03:30 - 04:00 Everything I did not have time to cover
+
+
+
+
