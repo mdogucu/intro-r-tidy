@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Introduction to R the Tidy Way</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mine Dogucu" />
+    <meta name="date" content="2020-03-05" />
+    <link rel="stylesheet" href="slide-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to R the Tidy Way
+## Modeling
+### Mine Dogucu
+### 2020-03-05
+
+---
+
+
+
+layout: true
+
+&lt;!-- This file by Mine Dogucu is licensed under a  Attribution-ShareAlike 2.5 Generic License (CC BY-SA 2.5) More information about the license can be found at https://creativecommons.org/licenses/by-sa/2.5/ --&gt;
+  
+&lt;div class="my-header"&gt;&lt;/div&gt;
+
+&lt;div class="my-footer"&gt; 
+ CC BY-SA &lt;a href="https://mdogucu.ics.uci.edu"&gt;Mine Dogucu&lt;/a&gt;&lt;/div&gt; 
+
+---
+class: center, middle
+
+## License
+
+&lt;img src="img/cc-sa.png" width="100%" /&gt;
+
+
+More information can be found [here](https://creativecommons.org/licenses/by-sa/2.5/)
+
+---
+
+
+
+
+---
+
+
+```r
+library(MASS)
+glimpse(birthwt)
+```
+
+```
+## Observations: 189
+## Variables: 10
+## $ low   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ age   &lt;int&gt; 19, 33, 20, 21, 18, 21, 22, 17, 29, 26, 19, 19, 22, 30, ...
+## $ lwt   &lt;int&gt; 182, 155, 105, 108, 107, 124, 118, 103, 123, 113, 95, 15...
+## $ race  &lt;int&gt; 2, 3, 1, 1, 1, 3, 1, 3, 1, 1, 3, 3, 3, 3, 1, 1, 2, 1, 3,...
+## $ smoke &lt;int&gt; 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0,...
+## $ ptl   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,...
+## $ ht    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,...
+## $ ui    &lt;int&gt; 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,...
+## $ ftv   &lt;int&gt; 0, 3, 1, 2, 0, 0, 1, 1, 1, 0, 0, 1, 0, 2, 0, 0, 0, 3, 0,...
+## $ bwt   &lt;int&gt; 2523, 2551, 2557, 2594, 2600, 2622, 2637, 2637, 2663, 26...
+```
+
+---
+## Some Data Wrangling
+
+Recode the `race` variable as
+
+1 - white  
+2 - black  
+3 - other  
+
+
+
+
+---
+class: center middle
+
+## Response variable 
+
+bwt
+
+Check the distribution
+
+---
+## Question
+
+We want to know whether there is a difference in bwt weight of babies who have mothers who smoke and those who do not. 
+
+Answer this question with a visual and a summary statistic.
+
+We will then model it and make an inference.
+---
+## Linear Model 
+
+Response variable: bwt
+
+Explanatory variable: smoke 
+
+
+```r
+lm(bwt ~ smoke, data = birthwt)
+```
+
+```
+## 
+## Call:
+## lm(formula = bwt ~ smoke, data = birthwt)
+## 
+## Coefficients:
+## (Intercept)        smoke  
+##      3055.7       -283.8
+```
+
+---
+## Linear Model 
+
+
+```r
+lm(bwt ~ smoke, data = birthwt) %&gt;% 
+  broom::tidy()
+```
+
+```
+## # A tibble: 2 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)    3056.      66.9     45.7  2.46e-103
+## 2 smoke          -284.     107.      -2.65 8.67e-  3
+```
+
+broom::tidy gives a results table that is a tibble. We can easily extract parts of this table or even write it to a .csv file.
+---
+## Question
+
+Can variance in `bwt` be explained by mother's `age`. Add age variable to the model. Make visualizations showing the relationship between the three variables.
+
+
+
+---
+
+## Multiple Predictors
+
+
+```r
+lm(bwt ~ smoke+age, data = birthwt) %&gt;% 
+  broom::tidy()
+```
+
+```
+## # A tibble: 3 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   2791.     241.       11.6  1.03e-23
+## 2 smoke         -278.     107.       -2.60 1.00e- 2
+## 3 age             11.3      9.88      1.14 2.55e- 1
+```
+
+---
+## Interaction
+
+
+```r
+lm(bwt ~ smoke*age, data = birthwt) %&gt;% 
+  broom::tidy()
+```
+
+```
+## # A tibble: 4 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   2406.      292.       8.23 3.18e-14
+## 2 smoke          798.      484.       1.65 1.01e- 1
+## 3 age             27.7      12.1      2.28 2.36e- 2
+## 4 smoke:age      -46.6      20.4     -2.28 2.39e- 2
+```
+
+---
+## More than 2 levels
+
+
+```r
+lm(bwt ~ race, data = birthwt) %&gt;% 
+  broom::tidy()
+```
+
+```
+## # A tibble: 3 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   2720.       140.    19.4   1.38e-46
+## 2 raceother       85.6      165.     0.518 6.05e- 1
+## 3 racewhite      383.       158.     2.42  1.63e- 2
+```
+
+
+R always takes the levels in alphabetical order. In this case raceblack is the reference group. 
+---
+## Final Model
+
+
+```r
+final_model &lt;- lm(bwt ~ smoke*age + race, data = birthwt)
+```
+
+---
+## Model Fit
+
+`glance()` provide many model fit indices.
+
+
+```r
+broom::glance(final_model) 
+```
+
+```
+## # A tibble: 1 x 11
+##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.135         0.112  687.      5.72 6.28e-5     6 -1500. 3014. 3036.
+## # ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
+```
+
+---
+## Predictions and Residuals
+
+
+
+```r
+birthwt %&gt;% 
+  modelr::add_predictions(final_model) %&gt;% 
+  modelr::add_residuals(final_model)
+```
+
+```
+##     low age lwt  race smoke ptl ht ui ftv  bwt     pred       resid
+## 1     0  19 182 black     0   0  0  1   0 2523 2856.229  -333.22868
+## 2     0  33 155 other     0   0  0  0   3 2551 3026.002  -475.00159
+## 3     0  20 105 white     1   0  0  0   1 2557 2945.026  -388.02605
+## 4     0  21 108 white     1   0  0  1   2 2594 2927.413  -333.41321
+## 5     0  18 107 white     1   0  0  1   0 2600 2980.252  -380.25175
+## 6     0  21 124 other     0   0  0  0   0 2622 2856.876  -234.87570
+## 7     0  22 118 white     0   0  0  0   1 2637 3291.230  -654.23015
+## 8     0  17 103 other     0   0  0  0   1 2637 2800.500  -163.50040
+## 9     0  29 123 white     1   0  0  0   1 2663 2786.510  -123.51044
+## 10    0  26 113 white     1   0  0  0   0 2665 2839.349  -174.34898
+## 11    0  19  95 other     0   0  0  0   0 2722 2828.688  -106.68805
+## 12    0  19 150 other     0   0  0  0   1 2733 2828.688   -95.68805
+## 13    0  22  95 other     0   0  1  0   0 2751 2870.970  -119.96952
+## 14    0  30 107 other     0   1  0  1   2 2750 2983.720  -233.72012
+## 15    0  18 100 white     1   0  0  0   0 2769 2980.252  -211.25175
+## 16    0  18 100 white     1   0  0  0   0 2769 2980.252  -211.25175
+## 17    0  15  98 black     0   0  0  0   0 2778 2799.853   -21.85338
+## 18    0  25 118 white     1   0  0  0   3 2782 2856.962   -74.96182
+## 19    0  20 120 other     0   0  0  1   0 2807 2842.782   -35.78188
+## 20    0  28 120 white     1   0  0  0   1 2821 2804.123    16.87671
+## 21    0  32 121 other     0   0  0  0   2 2835 3011.908  -176.90776
+## 22    0  31 100 white     0   0  0  1   3 2835 3418.075  -583.07457
+## 23    0  36 202 white     0   0  0  0   1 2836 3488.544  -652.54369
+## 24    0  28 120 other     0   0  0  0   0 2863 2955.532   -92.53247
+## 25    0  25 120 other     0   0  0  1   2 2877 2913.251   -36.25100
+## 26    0  28 167 white     0   0  0  0   0 2877 3375.793  -498.79310
+## 27    0  17 122 white     1   0  0  0   0 2906 2997.865   -91.86459
+## 28    0  29 150 white     0   0  0  0   2 2920 3389.887  -469.88692
+## 29    0  26 168 black     1   0  0  0   0 2920 2446.629   473.37103
+## 30    0  17 113 black     0   0  0  0   1 2920 2828.041    91.95897
+## 31    0  17 113 black     0   0  0  0   1 2920 2828.041    91.95897
+## 32    0  24  90 white     1   1  0  0   1 2948 2874.575    73.42533
+## 33    0  35 121 black     1   1  0  0   1 2948 2288.113   659.88664
+## 34    0  25 155 white     0   0  0  0   1 2977 3333.512  -356.51162
+## 35    0  25 125 black     0   0  0  0   0 2977 2940.792    36.20838
+## 36    0  29 140 white     1   0  0  0   2 2977 2786.510   190.48956
+## 37    0  19 138 white     1   0  0  0   2 2977 2962.639    14.36110
+## 38    0  27 124 white     1   0  0  0   0 2922 2821.736   100.26387
+## 39    0  31 215 white     1   0  0  0   2 3005 2751.285   253.71525
+## 40    0  33 109 white     1   0  0  0   1 3033 2716.059   316.94094
+## 41    0  21 185 black     1   0  0  0   2 3042 2534.693   507.30680
+## 42    0  19 189 white     0   0  0  0   2 3062 3248.949  -186.94868
+## 43    0  23 130 black     0   0  0  0   1 3062 2912.604   149.39603
+## 44    0  21 160 white     0   0  0  0   0 3062 3277.136  -215.13633
+## 45    0  18  90 white     1   0  0  1   0 3062 2980.252    81.74825
+## 46    0  18  90 white     1   0  0  1   0 3062 2980.252    81.74825
+## 47    0  32 132 white     0   0  0  0   4 3080 3432.168  -352.16839
+## 48    0  19 132 other     0   0  0  0   0 3090 2828.688   261.31195
+## 49    0  24 115 white     0   0  0  0   2 3090 3319.418  -229.41780
+## 50    0  22  85 other     1   0  0  0   0 3090 2489.540   600.46027
+## 51    0  22 120 white     0   0  1  0   1 3100 3291.230  -191.23015
+## 52    0  23 128 other     0   0  0  0   0 3104 2885.063   218.93665
+## 53    0  22 130 white     1   0  0  0   0 3132 2909.800   222.19964
+## 54    0  30  95 white     1   0  0  0   2 3147 2768.898   378.10241
+## 55    0  19 115 other     0   0  0  0   0 3175 2828.688   346.31195
+## 56    0  16 110 other     0   0  0  0   0 3175 2786.407   388.59342
+## 57    0  21 110 other     1   0  0  1   0 3203 2507.153   695.84742
+## 58    0  30 153 other     0   0  0  0   0 3203 2983.720   219.27988
+## 59    0  20 103 other     0   0  0  0   0 3203 2842.782   360.21812
+## 60    0  17 119 other     0   0  0  0   0 3225 2800.500   424.49960
+## 61    0  17 119 other     0   0  0  0   0 3225 2800.500   424.49960
+## 62    0  23 119 other     0   0  0  0   2 3232 2885.063   346.93665
+## 63    0  24 110 other     0   0  0  0   0 3232 2899.157   332.84283
+## 64    0  28 140 white     0   0  0  0   0 3234 3375.793  -141.79310
+## 65    0  26 133 other     1   2  0  0   0 3260 2419.088   840.91165
+## 66    0  20 169 other     0   1  0  1   1 3274 2842.782   431.21812
+## 67    0  24 115 other     0   0  0  0   2 3274 2899.157   374.84283
+## 68    0  28 250 other     1   0  0  0   6 3303 2383.863   919.13734
+## 69    0  20 141 white     0   2  0  1   1 3317 3263.043    53.95750
+## 70    0  22 158 black     0   1  0  0   2 3317 2898.510   418.48985
+## 71    0  22 112 white     1   2  0  0   0 3317 2909.800   407.19964
+## 72    0  31 150 other     1   0  0  0   2 3321 2331.024   989.97588
+## 73    0  23 115 other     1   0  0  0   1 3331 2471.927   859.07311
+## 74    0  16 112 black     0   0  0  0   0 3374 2813.947   560.05280
+## 75    0  16 135 white     1   0  0  0   0 3374 3015.477   358.52256
+## 76    0  18 229 black     0   0  0  0   0 3402 2842.135   559.86515
+## 77    0  25 140 white     0   0  0  0   1 3416 3333.512    82.48838
+## 78    0  32 134 white     1   1  0  0   4 3430 2733.672   696.32810
+## 79    0  20 121 black     1   0  0  0   0 3444 2552.306   891.69395
+## 80    0  23 190 white     0   0  0  0   0 3459 3305.324   153.67602
+## 81    0  22 131 white     0   0  0  0   1 3460 3291.230   168.76985
+## 82    0  32 170 white     0   0  0  0   0 3473 3432.168    40.83161
+## 83    0  30 110 other     0   0  0  0   0 3544 2983.720   560.27988
+## 84    0  20 127 other     0   0  0  0   0 3487 2842.782   644.21812
+## 85    0  23 123 other     0   0  0  0   0 3544 2885.063   658.93665
+## 86    0  17 120 other     1   0  0  0   0 3572 2577.604   994.39604
+## 87    0  19 105 other     0   0  0  0   0 3572 2828.688   743.31195
+## 88    0  23 130 white     0   0  0  0   0 3586 3305.324   280.67602
+## 89    0  36 175 white     0   0  0  0   0 3600 3488.544   111.45631
+## 90    0  22 125 white     0   0  0  0   1 3614 3291.230   322.76985
+## 91    0  24 133 white     0   0  0  0   0 3614 3319.418   294.58220
+## 92    0  21 134 other     0   0  0  0   2 3629 2856.876   772.12430
+## 93    0  19 235 white     1   0  1  0   0 3629 2962.639   666.36110
+## 94    0  25  95 white     1   3  0  1   0 3637 2856.962   780.03818
+## 95    0  16 135 white     1   0  0  0   0 3643 3015.477   627.52256
+## 96    0  29 135 white     0   0  0  0   1 3651 3389.887   261.11308
+## 97    0  29 154 white     0   0  0  0   1 3651 3389.887   261.11308
+## 98    0  19 147 white     1   0  0  0   0 3651 2962.639   688.36110
+## 99    0  19 147 white     1   0  0  0   0 3651 2962.639   688.36110
+## 100   0  30 137 white     0   0  0  0   1 3699 3403.981   295.01926
+## 101   0  24 110 white     0   0  0  0   1 3728 3319.418   408.58220
+## 102   0  19 184 white     1   0  1  0   0 3756 2962.639   793.36110
+## 103   0  24 110 other     0   1  0  0   0 3770 2899.157   870.84283
+## 104   0  23 110 white     0   0  0  0   1 3770 3305.324   464.67602
+## 105   0  20 120 other     0   0  0  0   0 3770 2842.782   927.21812
+## 106   0  25 241 black     0   0  1  0   0 3790 2940.792   849.20838
+## 107   0  30 112 white     0   0  0  0   1 3799 3403.981   395.01926
+## 108   0  22 169 white     0   0  0  0   0 3827 3291.230   535.76985
+## 109   0  18 120 white     1   0  0  0   2 3856 2980.252   875.74825
+## 110   0  16 170 black     0   0  0  0   4 3860 2813.947  1046.05280
+## 111   0  32 186 white     0   0  0  0   2 3860 3432.168   427.83161
+## 112   0  18 120 other     0   0  0  0   1 3884 2814.594  1069.40577
+## 113   0  29 130 white     1   0  0  0   2 3884 2786.510  1097.48956
+## 114   0  33 117 white     0   0  0  1   1 3912 3446.262   465.73778
+## 115   0  20 170 white     1   0  0  0   0 3940 2945.026   994.97395
+## 116   0  28 134 other     0   0  0  0   1 3941 2955.532   985.46753
+## 117   0  14 135 white     0   0  0  0   0 3941 3178.480   762.52044
+## 118   0  28 130 other     0   0  0  0   0 3969 2955.532  1013.46753
+## 119   0  25 120 white     0   0  0  0   2 3983 3333.512   649.48838
+## 120   0  16  95 other     0   0  0  0   1 3997 2786.407  1210.59342
+## 121   0  20 158 white     0   0  0  0   1 3997 3263.043   733.95750
+## 122   0  26 160 other     0   0  0  0   0 4054 2927.345  1126.65518
+## 123   0  21 115 white     0   0  0  0   1 4054 3277.136   776.86367
+## 124   0  22 129 white     0   0  0  0   0 4111 3291.230   819.76985
+## 125   0  25 130 white     0   0  0  0   2 4153 3333.512   819.48838
+## 126   0  31 120 white     0   0  0  0   2 4167 3418.075   748.92543
+## 127   0  35 170 white     0   1  0  0   1 4174 3474.450   699.55013
+## 128   0  19 120 white     1   0  0  0   0 4238 2962.639  1275.36110
+## 129   0  24 116 white     0   0  0  0   1 4593 3319.418  1273.58220
+## 130   0  45 123 white     0   0  0  0   1 4990 3615.388  1374.61189
+## 131   1  28 120 other     1   1  0  1   0  709 2383.863 -1674.86266
+## 132   1  29 130 white     0   0  0  1   2 1021 3389.887 -2368.88692
+## 133   1  34 187 black     1   0  1  0   0 1135 2305.726 -1170.72621
+## 134   1  25 105 other     0   1  1  0   0 1330 2913.251 -1583.25100
+## 135   1  25  85 other     0   0  0  1   0 1474 2913.251 -1439.25100
+## 136   1  27 150 other     0   0  0  0   0 1588 2941.439 -1353.43864
+## 137   1  23  97 other     0   0  0  1   1 1588 2885.063 -1297.06335
+## 138   1  24 128 black     0   1  0  0   1 1701 2926.698 -1225.69780
+## 139   1  24 132 other     0   0  1  0   0 1729 2899.157 -1170.15717
+## 140   1  21 165 white     1   0  1  0   1 1790 2927.413 -1137.41321
+## 141   1  32 105 white     1   0  0  0   0 1818 2733.672  -915.67190
+## 142   1  19  91 white     1   2  0  1   0 1885 2962.639 -1077.63890
+## 143   1  25 115 other     0   0  0  0   0 1893 2913.251 -1020.25100
+## 144   1  16 130 other     0   0  0  0   1 1899 2786.407  -887.40658
+## 145   1  25  92 white     1   0  0  0   0 1928 2856.962  -928.96182
+## 146   1  20 150 white     1   0  0  0   2 1928 2945.026 -1017.02605
+## 147   1  21 200 black     0   0  0  1   2 1928 2884.416  -956.41632
+## 148   1  24 155 white     1   1  0  0   0 1936 2874.575  -938.57467
+## 149   1  21 103 other     0   0  0  0   0 1970 2856.876  -886.87570
+## 150   1  20 125 other     0   0  0  1   0 2055 2842.782  -787.78188
+## 151   1  25  89 other     0   2  0  0   1 2055 2913.251  -858.25100
+## 152   1  19 102 white     0   0  0  0   2 2082 3248.949 -1166.94868
+## 153   1  19 112 white     1   0  0  1   0 2084 2962.639  -878.63890
+## 154   1  26 117 white     1   1  0  0   0 2084 2839.349  -755.34898
+## 155   1  24 138 white     0   0  0  0   0 2100 3319.418 -1219.41780
+## 156   1  17 130 other     1   1  0  1   0 2125 2577.604  -452.60396
+## 157   1  20 120 black     1   0  0  0   3 2126 2552.306  -426.30605
+## 158   1  22 130 white     1   1  0  1   1 2187 2909.800  -722.80036
+## 159   1  27 130 black     0   0  0  1   0 2187 2968.979  -781.97927
+## 160   1  20  80 other     1   0  0  1   0 2211 2524.765  -313.76543
+## 161   1  17 110 white     1   0  0  0   0 2225 2997.865  -772.86459
+## 162   1  25 105 other     0   1  0  0   1 2240 2913.251  -673.25100
+## 163   1  20 109 other     0   0  0  0   0 2240 2842.782  -602.78188
+## 164   1  18 148 other     0   0  0  0   0 2282 2814.594  -532.59423
+## 165   1  18 110 black     1   1  0  0   0 2296 2587.532  -291.53174
+## 166   1  20 121 white     1   1  0  1   0 2296 2945.026  -649.02605
+## 167   1  21 100 other     0   1  0  0   4 2301 2856.876  -555.87570
+## 168   1  26  96 other     0   0  0  0   0 2325 2927.345  -602.34482
+## 169   1  31 102 white     1   1  0  0   1 2353 2751.285  -398.28475
+## 170   1  15 110 white     0   0  0  0   0 2353 3192.573  -839.57338
+## 171   1  23 187 black     1   0  0  0   1 2367 2499.468  -132.46751
+## 172   1  20 122 black     1   0  0  0   0 2381 2552.306  -171.30605
+## 173   1  24 105 black     1   0  0  0   0 2381 2481.855  -100.85467
+## 174   1  15 115 other     0   0  0  1   0 2381 2772.313  -391.31275
+## 175   1  23 120 other     0   0  0  0   0 2410 2885.063  -475.06335
+## 176   1  30 142 white     1   1  0  0   0 2410 2768.898  -358.89759
+## 177   1  22 130 white     1   0  0  0   1 2410 2909.800  -499.80036
+## 178   1  17 120 white     1   0  0  0   3 2414 2997.865  -583.86459
+## 179   1  23 110 white     1   1  0  0   0 2424 2892.188  -468.18752
+## 180   1  17 120 black     0   0  0  0   2 2438 2828.041  -390.04103
+## 181   1  26 154 other     0   1  1  0   1 2442 2927.345  -485.34482
+## 182   1  20 105 other     0   0  0  0   3 2450 2842.782  -392.78188
+## 183   1  26 190 white     1   0  0  0   0 2466 2839.349  -373.34898
+## 184   1  14 101 other     1   1  0  0   0 2466 2630.443  -164.44250
+## 185   1  28  95 white     1   0  0  0   2 2466 2804.123  -338.12329
+## 186   1  14 100 other     0   0  0  0   2 2495 2758.219  -263.21893
+## 187   1  23  94 other     1   0  0  0   0 2495 2471.927    23.07311
+## 188   1  17 142 black     0   0  1  0   0 2495 2828.041  -333.04103
+## 189   1  21 130 white     1   0  1  0   3 2495 2927.413  -432.41321
+```
+
+---
+## Normality of residuals 
+
+Check to see if residuals are normally distributed?
+
+
+```r
+birthwt &lt;- birthwt %&gt;% 
+  modelr::add_predictions(final_model) %&gt;% 
+  modelr::add_residuals(final_model)
+```
+
+---
+## Residual plot
+
+&lt;img src="7-modeling_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+## Schedule for the Day
+
+__08:45 - 09:00 Introduction__  
+__09:00 - 09:15 Getting to Know the Basics__  
+__09:15 - 10:15 Data Visualization__  
+__10:15 - 10:30 Break__  
+__10:30 - 12:00 Data Wrangling__  
+__12:00 - 01:00 Lunch__  
+__01:00 - 01:30 Working Locally With R__  
+__01:30 - 02:00 Dealing with Datasets__  
+__02:00 - 02:30 Case Study__  
+__02:30 - 02:45 Break__  
+__02:45 - 03:30 Modeling__  
+03:30 - 04:00 Everything I did not have time to cover
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

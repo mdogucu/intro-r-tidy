@@ -38,21 +38,87 @@ More information can be found [here](https://creativecommons.org/licenses/by-sa/
 
 ---
 
+## Importing .csv Data 
+
+
 ```{r eval = FALSE}
-sas_data <- haven::read_xpt("")
+readr::read_csv("dataset.csv")
+```
+---
+
+## Importing Excel Data
+
+```{r eval = FALSE}
+readxl::read_excel("dataset.xlsx")
 ```
 
-Import 
-Join
-Write files
+Read in the `cool_study.xlsx` data first by downloading it from the workshop website.  
 
-## Data importing, different datasets
+---
+## Importing Excel Data
 
-
-## Joining
+```{r eval = FALSE}
+readxl::read_excel("dataset.xlsx", sheet = 2)
+```
 
 ---
 
+## Importing SAS, SPSS, Stata Data
+
+```{r eval = FALSE}
+library(haven)
+
+# SAS
+read_sas("dataset.sas7bdat")
+
+# SPSS
+read_sav("dataset.sav")
+
+# Stata
+read_dta("dataset.dta")
+```
+
+---
+
+## Practice
+
+Download the HIV Antibody Test from the workshop website. Import it into R. 
+
+
+---
+
+## Writing data files
+
+```{r eval = FALSE}
+write_csv(data_frame, "dataset.csv")
+write_xls(data_frame, "dataset.xlsx")
+```
+
+Similar code pattern holds true for other data formats.
+
+
+---
+
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/hiv.png')
+```
+
+.footnote[[National Health and Nutrition Examination Survey by CDC](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/HIV_J.htm)
+]
+
+---
+## Practice 
+
+1. Change the name of the variable LBXHIVC to `hiv_1_2_combo`
+
+2. Recode level 1 as `"HIV-1/2 Reactive"` and level 2 as `"HIV-1/2 Non-reactive"`
+
+3. Count these levels. 
+
+4. Write the summary table with counts into a `.csv` file.
+
+---
 
 ## Schedule for the Day
 

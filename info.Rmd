@@ -41,6 +41,10 @@ Download instructions
 
 - [LA Police Payroll](https://controllerdata.lacity.org/Payroll/Police-Payroll/sxpf-rh6t) To be downloaded in csv format. 
 
+- <a href="slides/data/cool_study.xlsx">cool_study</a>
+
+- [HIV Antibody Test](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Laboratory&CycleBeginYear=2017) Note that the data is in XPT format.
+
 ## After the Workshop
 
 - Join the conversation on Twitter with #rstats #tidyverse tags. It is a welcoming community. 

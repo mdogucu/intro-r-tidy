@@ -210,11 +210,21 @@ Good news: We have tidyverse.
 
 ## Tidyverse
 
-In short, tidyverse is a family of packages. From practical stand point, you can install all tidyverse packages at once (and you did before lunch). By doing that you installed all the following packages.
+In short, tidyverse is a family of packages. From practical stand point, you can install many tidyverse packages at once (and you did before lunch). By doing that you installed all the following packages.
+
+- ggplot2
+- dplyr
+- tidyr
+- readr
+- purrr
+- tibble
+- stringr
+- forcats
+
+
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
-tidyverse_packages(include_self = FALSE)
 
 ```
 

@@ -12,7 +12,7 @@
 class: center, middle, inverse, title-slide
 
 # Introduction to R the Tidy Way
-## Everything I did not have time to cover
+## Dealing with Datasets
 ### Mine Dogucu
 ### 2020-03-05
 
@@ -41,111 +41,91 @@ More information can be found [here](https://creativecommons.org/licenses/by-sa/
 
 ---
 
-One last useful function
+## Importing .csv Data 
+
 
 
 ```r
-sessionInfo()
+readr::read_csv("dataset.csv")
+```
+---
+
+## Importing Excel Data
+
+
+```r
+readxl::read_excel("dataset.xlsx")
 ```
 
-```
-## R version 3.6.1 (2019-07-05)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 18362)
-## 
-## Matrix products: default
-## 
-## locale:
-## [1] LC_COLLATE=English_United States.1252 
-## [2] LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## loaded via a namespace (and not attached):
-##  [1] compiler_3.6.1  magrittr_1.5    tools_3.6.1     htmltools_0.3.6
-##  [5] xaringan_0.12   yaml_2.2.0      Rcpp_1.0.1      stringi_1.4.3  
-##  [9] rmarkdown_2.0   knitr_1.23      stringr_1.4.0   xfun_0.8       
-## [13] digest_0.6.20   evaluate_0.14
+Read in the `cool_study.xlsx` data first by downloading it from the workshop website.  
+
+---
+## Importing Excel Data
+
+
+```r
+readxl::read_excel("dataset.xlsx", sheet = 2)
 ```
 
+---
+
+## Importing SAS, SPSS, Stata Data
+
+
+```r
+library(haven)
+
+# SAS
+read_sas("dataset.sas7bdat")
+
+# SPSS
+read_sav("dataset.sav")
+
+# Stata
+read_dta("dataset.dta")
+```
 
 ---
 
-##  Data Science Cycle
+## Practice
 
-&lt;img src="img/data-cycle.png" width="100%" /&gt;
+Download the HIV Antibody Test from the workshop website. Import it into R. 
 
-.footnote[Image from Grolemund, G., &amp; Wickham, H. (2018). R for data science (CC BY-NC-ND 3.0).]
 
 ---
 
-class: center, middle
+## Writing data files
 
 
-.strike[Everything I did not have time to cover]
+```r
+write_csv(data_frame, "dataset.csv")
+write_xls(data_frame, "dataset.xlsx")
+```
 
-What I would teach if we had 8 more hours of this workshop
+Similar code pattern holds true for other data formats.
 
----
-class: center, middle
-
-
-.strike[Everything I did not have time to cover]
-
-.strike[What I would teach if we had 8 more hours of this workshop]
-
-All the cool things you can check out later in depth
-
----
-
-
-[gganimate](https://github.com/thomasp85/gganimate) for Animated ggplots  
-[patchwork](https://github.com/thomasp85/patchwork) for displaying multiple ggplots  
-[ggtext](https://github.com/wilkelab/ggtext) for adding text to ggplot    
-[shiny](https://shiny.rstudio.com/gallery/) for web apps  
-[xaringan](https://github.com/yihui/xaringan) for being a Presentation Ninja with .Rmd  
-[stringr](stringr) for dealing with strings   
-[rticles](rticles) for LaTeX journal article templates  
-[naniar](https://github.com/njtierney/naniar) for summarizing missing data  
-[kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) for beautiful HTML tables   
-[blogdown](https://bookdown.org/yihui/blogdown/)for creating websites  
-[github](https://happygitwithr.com/) for version control
-
----
-class: middle center
-
-In short, there is a package for everything.
-
-If there is not, then you can build your own package. 
 
 ---
 
 
-## After the Workshop
+&lt;img src="img/hiv.png" width="100%" /&gt;
 
-- Join the conversation on Twitter with #rstats #tidyverse tags. It is a welcoming community. 
-- Find your local R meetups on [meetup.com](https://www.meetup.com/topics/r-project-for-statistical-computing/).
-- Join [RStudio Community](https://community.rstudio.com/). 
-- Try Out [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).
-- Join [R for Data Science Learning Community](https://www.rfordatasci.com/).
-- Use [RStudio resources](https://resources.rstudio.com/): webinars, conference talks etc.
+.footnote[[National Health and Nutrition Examination Survey by CDC](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/HIV_J.htm)
+]
+
+---
+## Practice 
+
+1. Change the name of the variable LBXHIVC to `hiv_1_2_combo`
+
+2. Recode level 1 as `"HIV-1/2 Reactive"` and level 2 as `"HIV-1/2 Non-reactive"`
+
+3. Count these levels. 
+
+4. Write the summary table with counts into a `.csv` file.
 
 ---
 
-class: center middle
-
-Mine Dogucu
-
-[@MineDogucu](https://twitter.com/MineDogucu)
-
-[mdogucu@uci.edu](mailto:mdogucu@uci.edu)
-
-
----
 ## Schedule for the Day
 
 __08:45 - 09:00 Introduction__  
@@ -156,10 +136,10 @@ __10:30 - 12:00 Data Wrangling__
 __12:00 - 01:00 Lunch__  
 __01:00 - 01:30 Working Locally With R__  
 __01:30 - 02:00 Dealing with Datasets__  
-__02:00 - 02:30 Case Study__  
-__02:30 - 02:45 Break__  
-__02:45 - 03:30 Modeling__  
-__03:30 - 04:00 Everything I did not have time to cover__
+02:00 - 02:30 Case Study  
+02:30 - 02:45 Break  
+02:45 - 03:30 Modeling  
+03:30 - 04:00 Everything I did not have time to cover
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -38,14 +38,162 @@ More information can be found [here](https://creativecommons.org/licenses/by-sa/
 
 ---
 
-broom
-
-modelr 
+```{r echo = FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+```
 
 
 ---
 
+```{r message = FALSE}
+library(MASS)
+glimpse(birthwt)
+```
 
+---
+## Some Data Wrangling
+
+Recode the `race` variable as
+
+1 - white  
+2 - black  
+3 - other  
+
+```{r echo = FALSE}
+birthwt <- birthwt %>% 
+  mutate(race = case_when(race == 1 ~ "white",
+                          race == 2 ~ "black",
+                          race == 3 ~ "other"))
+
+```
+
+
+---
+class: center middle
+
+## Response variable 
+
+bwt
+
+Check the distribution
+
+---
+## Question
+
+We want to know whether there is a difference in bwt weight of babies who have mothers who smoke and those who do not. 
+
+Answer this question with a visual and a summary statistic.
+
+We will then model it and make an inference.
+---
+## Linear Model 
+
+Response variable: bwt
+
+Explanatory variable: smoke 
+
+```{r}
+lm(bwt ~ smoke, data = birthwt)
+```
+
+---
+## Linear Model 
+
+```{r}
+lm(bwt ~ smoke, data = birthwt) %>% 
+  broom::tidy()
+```
+
+broom::tidy gives a results table that is a tibble. We can easily extract parts of this table or even write it to a .csv file.
+---
+## Question
+
+Can variance in `bwt` be explained by mother's `age`. Add age variable to the model. Make visualizations showing the relationship between the three variables.
+
+```{r echo = FALSE, eval = FALSE}
+ggplot(birthwt, aes(x = age, y = bwt)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_grid(smoke~.)
+```
+
+---
+
+## Multiple Predictors
+
+```{r}
+lm(bwt ~ smoke+age, data = birthwt) %>% 
+  broom::tidy()
+```
+
+---
+## Interaction
+
+```{r}
+lm(bwt ~ smoke*age, data = birthwt) %>% 
+  broom::tidy()
+```
+
+---
+## More than 2 levels
+
+```{r}
+lm(bwt ~ race, data = birthwt) %>% 
+  broom::tidy()
+```
+
+
+R always takes the levels in alphabetical order. In this case raceblack is the reference group. 
+---
+## Final Model
+
+```{r}
+final_model <- lm(bwt ~ smoke*age + race, data = birthwt)
+```
+
+---
+## Model Fit
+
+`glance()` provide many model fit indices.
+
+```{r}
+broom::glance(final_model) 
+```
+
+---
+## Predictions and Residuals
+
+
+```{r}
+birthwt %>% 
+  modelr::add_predictions(final_model) %>% 
+  modelr::add_residuals(final_model)
+```
+
+---
+## Normality of residuals 
+
+Check to see if residuals are normally distributed?
+
+```{r}
+birthwt <- birthwt %>% 
+  modelr::add_predictions(final_model) %>% 
+  modelr::add_residuals(final_model)
+```
+
+---
+## Residual plot
+
+```{r echo = FALSE, fig.align='center'}
+birthwt %>% 
+  ggplot(aes(x = pred, y = resid)) +
+  geom_point()+
+  geom_hline(yintercept = 0)
+```
+
+
+
+---
 ## Schedule for the Day
 
 __08:45 - 09:00 Introduction__  

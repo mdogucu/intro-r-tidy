@@ -38,6 +38,15 @@ More information can be found [here](https://creativecommons.org/licenses/by-sa/
 
 ---
 
+One last useful function
+
+```{r}
+sessionInfo()
+```
+
+
+---
+
 ##  Data Science Cycle
 
 ```{r echo=FALSE, out.width='100%'}
@@ -70,6 +79,7 @@ All the cool things you can check out later in depth
 
 [gganimate](https://github.com/thomasp85/gganimate) for Animated ggplots  
 [patchwork](https://github.com/thomasp85/patchwork) for displaying multiple ggplots  
+[ggtext](https://github.com/wilkelab/ggtext) for adding text to ggplot    
 [shiny](https://shiny.rstudio.com/gallery/) for web apps  
 [xaringan](https://github.com/yihui/xaringan) for being a Presentation Ninja with .Rmd  
 [stringr](stringr) for dealing with strings   
