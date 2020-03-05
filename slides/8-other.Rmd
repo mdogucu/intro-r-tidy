@@ -67,13 +67,19 @@ All the cool things you can check out later in depth
 
 ---
 
-naniar
-gganimate
-shiny
-xaringan
+
+[gganimate](https://github.com/thomasp85/gganimate) for Animated ggplots
+[patchwork](https://github.com/thomasp85/patchwork) for displaying multiple ggplots
+[shiny](https://shiny.rstudio.com/gallery/) for web apps
+[https://github.com/yihui/xaringan](xaringan) for being a Presentation Ninja with .Rmd
+[stringr](stringr) for dealing with strings 
+
+
+
+naniar 
+
 rticles
-stringr
-patchwork
+
 kableExtra
 github - show our example reproducible workflows
 here::here()
