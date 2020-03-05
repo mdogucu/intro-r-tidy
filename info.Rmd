@@ -25,15 +25,15 @@ Of all these steps RStudio Cloud is the most important. If you run into issues w
 
 ### Slides
 
-[Introduction](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/0-welcome.html)
-[Getting to Know the Basics](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/1-basics.html)
-[Data Visualization](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/2-visualization.html)  
-[Data Wrangling](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/3-wrangling.html)  
-[Working Locally With R](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/4-local.html)  
-[Dealing with Datasets](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/5-datasets.html)  
-[Case Study](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/6-practice.html) 
-[Modeling](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/7-modeling.html)  
-[Everything I did not have time to cover](https://mdogucu.ics.uci.edu/workshops/2020-03-05-intro-tidy/8-other.html)
+0. [Introduction](slides/0-welcome.html)  
+1. [Getting to Know the Basics](slides/1-basics.html)
+2. [Data Visualization](slides/2-visualization.html)
+3. [Data Wrangling](slides/3-wrangling.html)  
+4. [Working Locally With R](slides/4-local.html)  
+5. [Dealing with Datasets](slides/5-datasets.html)  
+6. [Case Study](slides/6-practice.html) 
+7. [Modeling](slides/7-modeling.html)  
+8. [Everything I did not have time to cover](slides/8-other.html)
 
 ### Datasets
 
@@ -54,6 +54,10 @@ Mine Dogucu, Assistant Professor of Teaching, Department of Statistics, Universi
 [@MineDogucu](http://www.twitter.com/MineDogucu) 
 
 This workshop will be TA'ed by [Mary Ryan](https://www.ics.uci.edu/~marymr/)   [@Marym_Ryan](https://twitter.com/Marym_Ryan).
+
+## Source Code
+
+The source code is available [here](https://github.com/mdogucu/intro-r-tidy)
 
 ## License
 
