@@ -847,24 +847,6 @@ ggplot(candy_rankings) +
 ```
 
 ---
-class: center middle
-
-## Getting Ready to Publish
-
----
-
-What citation style do you use? What would you need to change in terms of styling?
-
-```{r echo = FALSE, fig.align='center'}
-
-ggplot(candy_rankings) +
-  aes(x = sugarpercent, y = winpercent) +
-  geom_point()
-
-```
-
----
-
 #labs
 
 .left-panel[

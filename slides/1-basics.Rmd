@@ -71,7 +71,7 @@ knitr::include_graphics('img/temp.png')
 
 ## .Rmd
 
-- On the lower right pane in the `Files` tab open the `sample_rmarkdown.Rmd` file. 
+- On the lower right pane in the `Files` tab open the `sample-rmarkdown.Rmd` file. 
 
 
 ---
@@ -163,7 +163,7 @@ do is a function something is an argument colorful is an argument
 
 ## Looking at Data
 
-Get to know the `candy_ranking` data. 
+Get to know the `candy_rankings` data. 
 
 - Clicking on the data frame in the Environment.
 - Clicking on the blue button. 

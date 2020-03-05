@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Introduction to R the Tidy Way</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mine Dogucu" />
+    <meta name="date" content="2020-03-05" />
+    <link rel="stylesheet" href="slide-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to R the Tidy Way
+## Data Visualization
+### Mine Dogucu
+### 2020-03-05
+
+---
+
+
+layout: true
+
+&lt;!-- This file by Mine Dogucu is licensed under a  Attribution-ShareAlike 2.5 Generic License (CC BY-SA 2.5) More information about the license can be found at https://creativecommons.org/licenses/by-sa/2.5/ --&gt;
+  
+&lt;div class="my-header"&gt;&lt;/div&gt;
+
+&lt;div class="my-footer"&gt; 
+ CC BY-SA &lt;a href="https://mdogucu.ics.uci.edu"&gt;Mine Dogucu&lt;/a&gt;&lt;/div&gt; 
+
+---
+class: center, middle
+
+
+
+
+
+## License
+
+&lt;img src="img/cc-sa.png" width="100%" /&gt;
+
+
+More information can be found [here](https://creativecommons.org/licenses/by-sa/2.5/)
+
+---
+class: center, middle
+
+## Data Visualization
+
+What kind of data visuals do you make/use/would like to use?
+---
+
+class: center, middle
+
+## Data Visualization
+
+For data visualization in R we will be using the `ggplot()` function.
+---
+
+## Fun facts
+
+- `ggplot`'s gg stands for Grammar of Graphics.
+- Grammar of Graphics is a book by Leland Wilkenson.
+- The ggplot2 package is written by Hadley Wickham. He is a statistician who has changed the R world not only with the tools he built but also by actively participating in community building that is welcoming.
+
+
+---
+
+If you wanted to make the following plot and R could understand English what would you tell R? Decide with your neighbor(s).
+
+&lt;img src="2-visualization_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+## Three Steps of Making a basic ggplot
+
+- Make space for a plot using the dataset. 
+- Decide on what goes on the axes.
+- Decide what kind of a plot.
+---
+
+## Step 1 - Make space for the plot
+
+.left-panel[
+
+```r
+ggplot(candy_rankings)
+```
+]
+.right-panel[
+
+![](2-visualization_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Step 2 - Decide on variables and their axes
+
+.left-panel[
+
+```r
+ggplot(candy_rankings) +
+  aes(x = chocolate)
+```
+]
+.right-panel[
+
+![](2-visualization_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Step 3 - Decide on the type of plot
+
+.left-panel[
+
+```r
+ggplot(candy_rankings) +
+  aes(x = chocolate) +
+  geom_bar() 
+```
+]
+.right-panel[
+
+![](2-visualization_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+]
+---
+
+🗒Note that ggplots can be defined as an object and then recalled later.
+
+.left-panel[
+
+```r
+p_bar &lt;- ggplot(candy_rankings) +
+  aes(x = chocolate) +
+  geom_bar() 
+
+p_bar
+```
+]
+.right-panel[
+
+![](2-visualization_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+]
+---
+
+## Practice
+
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+&lt;img src="2-visualization_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Error vs. Warning &amp; Message
+
+🔺  We have seen an error before. When you run into an __error__, R would not execute the code.
+
+⚠️When you see __warning__ or a __message__. The code runs and returns a ggplot but also lets us know that something is going on.
+---
+## What is binwidth?
+
+Warnings and messages are mostly function specific and require some thinking (and possibly Googling) to figure things out. 
+
+If bar plots have bars and they are called bar plots, technically histograms are bin plots because they have bins. 
+
+The warning is basically warning us that by default, `geom_histogram()` displays 30 bins. It is asking us to set the binwidth. 
+
+Where do you think the binwidth argument would go?
+
+---
+
+## Binwidth
+
+.left-panel[
+
+```r
+ggplot(candy_rankings) +
+  aes(x = winpercent) +
+  geom_histogram(binwidth = 3) 
+```
+]
+.right-panel[
+
+![](2-visualization_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+]
+---
+class:middle
+
+## Fun fact
+
+__histo__ comes from the Greek word _histos_ that literally means "anything set up right".
+
+__gram__: comes from the Greek word _gramma_ which means "that which is drawn".
+
+.footnote[Online Etymology Dictionary]
+
+---
+class: center, middle
+
+## Scatter plot aka geom_point()
+
+Can you make a plot showing a relationship between `pricepercent` and `winpercent`? Do the candies with higher `pricepercent` have higher `winpercent`? 
+
+---
+
+## Scatter plot aka geom_point()
+
+.left-panel[
+
+```r
+ggplot(candy_rankings) +
+  aes(x = pricepercent,
+      y = winpercent) +
+  geom_point() 
+```
+]
+.right-panel[
+
+![](2-visualization_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+]
+---
+
+class: middle center
+
+## Overview of geoms
+
+Depending on the types of variables (in Step 2) we decide on the geom type (Step 3). 
+
+---
+
+## geom_bar()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; categorical &lt;/td&gt;
+    &lt;td&gt; &amp;emsp; &amp;emsp; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = chocolate) +
+  geom_bar() 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+]
+---
+
+## geom_histogram()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; &amp;emsp; &amp;emsp;&lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt; 
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = winpercent) +
+  geom_histogram() 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+
+## geom_density()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; &amp;emsp; &amp;emsp;&lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = winpercent) +
+  geom_density() 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## geom_dotplot()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; &amp;emsp; &amp;emsp; &lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = winpercent) +
+  geom_dotplot() 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## geom_dotplot()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; &amp;emsp; &amp;emsp; &lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = winpercent) +
+  geom_dotplot(binwidth = 3) 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+
+## geom_boxplot()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; categorical &lt;/td&gt;
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = chocolate, 
+      y = winpercent) +
+  geom_boxplot() 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## geom_point()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = pricepercent, 
+      y = winpercent) +
+  geom_point() 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+
+]
+
+
+
+---
+
+class: middle center
+
+You can add layers on top of   
+layers on top of  
+layers on top of   
+layers...
+
+---
+
+## geom_point() and geom_smooth()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = pricepercent, 
+      y = winpercent) +
+  geom_point() +
+  geom_smooth()
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+
+## geom_point() and geom_smooth()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+We can set the smoothing method to be _lm_ (linear model).
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = pricepercent, 
+      y = winpercent) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## geom_point() and geom_smooth()
+
+.left-panel[
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;x&lt;/th&gt;
+    &lt;th&gt;y&lt;/th&gt;
+  &lt;/tr&gt;
+  
+   &lt;tr&gt; 
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;td&gt; continuous &lt;/td&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+
+We can set _se_ (standard error) to FALSE
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = pricepercent, 
+      y = winpercent) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE)
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+
+]
+
+---
+## Practice
+
+&lt;img src="2-visualization_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Practice
+
+Do the candies with higher `sugarpercent` have higher `winpercent`? Plot this relationship.
+
+---
+class: center middle 
+
+## Colors
+
+.large[
+🌈
+] 
+
+Pick your favorite color(s) from the list at:
+
+[bit.ly/colors-r](http:/bit.ly/colors-r)
+
+---
+
+# color = ?
+
+.left-panel[
+
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = chocolate) +
+  geom_bar(color = 'darkblue') 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+# fill = ?
+
+.left-panel[
+
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = chocolate) +
+  geom_bar(color = 'darkblue',
+           fill = 'coral') 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+# fill = ?
+
+.left-panel[
+
+The fill argument can also be used for a variable. Note that this time fill is inside the `aes` function with the other variable. The colors are set by default.
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = chocolate, 
+      fill = fruity) +
+  geom_bar()
+```
+
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+class: center, middle 
+
+## Shapes 
+
+[bit.ly/shapes-r](http:/bit.ly/shapes-r)
+
+---
+
+## Shapes 
+
+.left-panel[
+
+```r
+ggplot(candy_rankings) +
+  aes(x = pricepercent,
+      y = winpercent) +
+  geom_point(shape = 2) 
+```
+]
+.right-panel[
+
+![](2-visualization_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Practice
+
+&lt;img src="2-visualization_files/figure-html/unnamed-chunk-46-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+#labs
+
+.left-panel[
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = sugarpercent, 
+      y = winpercent) +
+  geom_point() +
+  labs(x = "Sugar Percentage",
+       y = "Win Percentage",
+       title = "Relationship between the dependent and independent variable",
+       subtitle = "for Halloween candies",
+       caption = "Based on an online Survey by FiveThirtyEight") 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-48-1.png)&lt;!-- --&gt;
+
+]
+
+
+
+---
+
+#lim
+
+.left-panel[
+
+
+```r
+ggplot(candy_rankings) +
+  aes(x = sugarpercent, 
+      y = winpercent) +
+  geom_point() +
+  xlim(0, 1) +
+  ylim(0, 100) 
+```
+
+]
+
+.right-panel[
+![](2-visualization_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+
+class: center middle
+
+
+## New Data
+
+`babies`
+
+---
+
+## Practice
+
+Make visuals that could provide some insight about the following questions.
+
+- Does the distribution of baby weights (`bwt`) look normal?
+- Is there a difference (at least visually) in baby weights (`bwt`) based on whether the mother smokes (`smoke`) or not?
+- Does the relationship between baby weights (`bwt`) and gestation period (`gestation`) seem linear?
+
+Note that this dataset has `NA` values which indicate missing values.
+
+---
+class: center middle
+
+## Facets
+
+---
+
+.left-panel[
+
+```r
+ggplot(babies) +
+  aes(x = gestation,
+      y = bwt) +
+  geom_point() +
+  facet_grid(rows = vars(smoke))
+```
+]
+.right-panel[
+
+
+```
+## Warning: Removed 13 rows containing missing values (geom_point).
+```
+
+![](2-visualization_files/figure-html/unnamed-chunk-52-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+.left-panel[
+
+```r
+ggplot(babies) +
+  aes(x = gestation,
+      y = bwt) +
+  geom_point() +
+  facet_grid(cols = vars(smoke))
+```
+]
+.right-panel[
+
+
+```
+## Warning: Removed 13 rows containing missing values (geom_point).
+```
+
+![](2-visualization_files/figure-html/unnamed-chunk-54-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Problems
+
+Even though we could facet the plots, the data is problematic
+
+- There are `NA` values.
+- `smoke` is coded as 0 and 1 and would possibly looks better if it said `smoker` and `non-smoker`.
+
+Good thing we will learn how to wrangle data.
+
+---
+## Side Note
+
+We have used `+` to add layers to the ggplot. This is the only time we will use `+` other than using it for addition operation. 
+
+---
+
+## Side Note
+
+If you provide the arguments in the order R expects them then you do not need to specify the arguments. Both of these sets of code would work the same.
+
+.pull-left[
+
+```r
+ggplot(candy_rankings) +
+* aes(x = chocolate,
+*     y = winpercent) +
+  geom_boxplot()
+```
+]
+
+.pull-right[
+
+```r
+ggplot(candy_rankings) +
+* aes(chocolate,
+*     winpercent) +
+  geom_boxplot()
+```
+]
+---
+
+## Fun fact
+
+- [BBC](https://bbc.github.io/rcookbook/), [fivethirtyeight](https://rdrr.io/cran/ggthemes/man/theme_fivethirtyeight.html), [Associated Press](https://github.com/associatedpress/apstyle), and many others use ggplot2.
+
+---
+## Schedule for the Day
+
+__08:45 - 09:00 Introduction__  
+__09:00 - 09:15 Getting to Know the Basics__  
+__09:15 - 10:15 Data Visualization__  
+10:15 - 10:30 Break  
+10:30 - 12:00 Data Wrangling  
+12:00 - 01:00 Lunch  
+01:00 - 01:30 Working Locally With R  
+01:30 - 02:00 Dealing with Datasets  
+02:00 - 02:30 Case Study  
+02:30 - 02:45 Break  
+02:45 - 03:30 Modeling  
+03:30 - 04:00 Everything I did not have time to cover
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
