@@ -36,12 +36,38 @@ knitr::include_graphics('img/cc-sa.png')
 
 More information can be found [here](https://creativecommons.org/licenses/by-sa/2.5/)
 
-LAPD dataset
+---
+## LAPD dataset
+
+
+1. How many full time staff are there? 
+2. How many different job class titles are there?
+3. Which of the Employment Type group earn the highest Hourly or Event Rate? 
+4. Do you notice anything interesting? Investigate. 
+5. Is this interesting thing only limited to a single year?
 
 ---
+## LAPD dataset 2018
 
+6. Moving on we will only use 2018 dataset. Subset the data to only keep observations from 2018 and variables `Employment Type`, `Hourly or Event Rate`, `Total Payments`, `Average Health Cost`, and `Benefits Plan`.
 
+7. Write this subset data to a file called `lapd_subset,csv`. 
 
+---
+## LAPD dataset 2018 - Total Payments
+
+8. Start a fresh new .Rmd document. Read in `lapd_subset.csv`.
+
+9. What does the distribution of Total Payments look like? What is your expectation?
+
+10. What are the minimum and maximum total payments?
+
+---
+## LAPD dataset 2018 - Benefits
+
+11. How many people have the "Police" benefits plan?
+
+12. What is the percentage of those who have the "Police" benefits plan?
 
 ---
 

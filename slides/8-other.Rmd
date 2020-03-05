@@ -68,27 +68,23 @@ All the cool things you can check out later in depth
 ---
 
 
-[gganimate](https://github.com/thomasp85/gganimate) for Animated ggplots
-[patchwork](https://github.com/thomasp85/patchwork) for displaying multiple ggplots
-[shiny](https://shiny.rstudio.com/gallery/) for web apps
-[https://github.com/yihui/xaringan](xaringan) for being a Presentation Ninja with .Rmd
-[stringr](stringr) for dealing with strings 
+[gganimate](https://github.com/thomasp85/gganimate) for Animated ggplots  
+[patchwork](https://github.com/thomasp85/patchwork) for displaying multiple ggplots  
+[shiny](https://shiny.rstudio.com/gallery/) for web apps  
+[xaringan](https://github.com/yihui/xaringan) for being a Presentation Ninja with .Rmd  
+[stringr](stringr) for dealing with strings   
+[rticles](rticles) for LaTeX journal article templates  
+[naniar](https://github.com/njtierney/naniar) for summarizing missing data  
+[kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) for beautiful HTML tables   
+[blogdown](https://bookdown.org/yihui/blogdown/)for creating websites  
+[github](https://happygitwithr.com/) for version control
 
+---
+class: middle center
 
+In short, there is a package for everything.
 
-naniar 
-
-rticles
-
-kableExtra
-github - show our example reproducible workflows
-here::here()
-
-There is a package for everything.
-
-If there is not, then you can build your own package.
-
-
+If there is not, then you can build your own package. 
 
 ---
 
@@ -111,6 +107,7 @@ Mine Dogucu
 [@MineDogucu](https://twitter.com/MineDogucu)
 
 [mdogucu@uci.edu](mailto:mdogucu@uci.edu)
+
 
 ---
 ## Schedule for the Day

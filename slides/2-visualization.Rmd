@@ -949,7 +949,7 @@ ggplot(babies) +
   aes(x = gestation,
       y = bwt) +
   geom_point() +
-  facet_grid(rows = vars(smoke))
+  facet_grid(.~smoke)
 ```
 ]
 .right-panel[
@@ -959,7 +959,7 @@ ggplot(babies) +
   aes(x = gestation,
       y = bwt) +
   geom_point() +
-  facet_grid(rows = vars(smoke))
+  facet_grid(.~smoke)
 ```
 ]
 
@@ -972,7 +972,7 @@ ggplot(babies) +
   aes(x = gestation,
       y = bwt) +
   geom_point() +
-  facet_grid(cols = vars(smoke))
+  facet_grid(smoke~.)
 ```
 ]
 .right-panel[
@@ -982,12 +982,19 @@ ggplot(babies) +
   aes(x = gestation,
       y = bwt) +
   geom_point() +
-  facet_grid(cols = vars(smoke))
+  facet_grid(smoke~.)
 ```
 ]
 
 ---
 
+class: center middle 
+
+## Equations
+
+y ~ x
+
+---
 ## Problems
 
 Even though we could facet the plots, the data is problematic
@@ -1032,6 +1039,12 @@ ggplot(candy_rankings) +
 ## Fun fact
 
 - [BBC](https://bbc.github.io/rcookbook/), [fivethirtyeight](https://rdrr.io/cran/ggthemes/man/theme_fivethirtyeight.html), [Associated Press](https://github.com/associatedpress/apstyle), and many others use ggplot2.
+
+---
+
+class: center middle
+
+[RStudio Cheat Sheets](https://rstudio.com/resources/cheatsheets/)
 
 ---
 ## Schedule for the Day
